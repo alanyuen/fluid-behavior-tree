@@ -20,11 +20,11 @@ namespace CleverCrow.Fluid.BTs.Tasks {
         }
 
         protected override void OnExit () {
-            exitLogic?.Invoke();
+            initLogic?.Invoke();
         }
 
         protected override void OnInit () {
-            initLogic?.Invoke();
+            exitLogic?.Invoke();
         }
     }
 }

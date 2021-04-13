@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Trees;
-using UnityEngine;
 
 namespace CleverCrow.Fluid.BTs.TaskParents {
     public abstract class TaskParentBase : GenericTaskBase, ITaskParent {
@@ -17,7 +16,7 @@ namespace CleverCrow.Fluid.BTs.TaskParents {
 
         protected virtual int MaxChildren { get; } = -1;
 
-        public GameObject Owner { get; set; }
+        public object Owner { get; set; }
 
         public override TaskStatus Update () {
             base.Update();
@@ -25,9 +24,6 @@ namespace CleverCrow.Fluid.BTs.TaskParents {
 
             var status = OnUpdate();
             LastStatus = status;
-            if (status != TaskStatus.Continue) {
-                Reset();
-            }
 
             return status;
         }
@@ -36,7 +32,7 @@ namespace CleverCrow.Fluid.BTs.TaskParents {
             if (ParentTree == null) {
                 return;
             }
-
+            
             if (_lastTickCount != ParentTree.TickCount) {
                 Reset();
             }
@@ -59,7 +55,7 @@ namespace CleverCrow.Fluid.BTs.TaskParents {
             if (!child.Enabled) {
                 return this;
             }
-
+            
             if (Children.Count < MaxChildren || MaxChildren < 0) {
                 Children.Add(child);
             }

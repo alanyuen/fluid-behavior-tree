@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CleverCrow.Fluid.BTs.Trees;
-using UnityEngine;
 
 namespace CleverCrow.Fluid.BTs.Tasks {
     public interface ITask {
@@ -18,9 +17,9 @@ namespace CleverCrow.Fluid.BTs.Tasks {
 
         /// <summary>
         /// Reference to the behavior tree responsible for this node. Allows for dynamic variables such as adding a
-        /// GameObject reference
+        /// object reference
         /// </summary>
-        GameObject Owner { get; set; }
+        object Owner { get; set; }
         
         /// <summary>
         /// Tree this node belongs to

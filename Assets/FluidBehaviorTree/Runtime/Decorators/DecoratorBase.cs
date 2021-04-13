@@ -2,7 +2,6 @@
 using CleverCrow.Fluid.BTs.TaskParents;
 using CleverCrow.Fluid.BTs.Tasks;
 using CleverCrow.Fluid.BTs.Trees;
-using UnityEngine;
 
 namespace CleverCrow.Fluid.BTs.Decorators {
     public abstract class DecoratorBase : GenericTaskBase, ITaskParent {
@@ -12,7 +11,7 @@ namespace CleverCrow.Fluid.BTs.Decorators {
 
         public bool Enabled { get; set; } = true;
 
-        public GameObject Owner { get; set; }
+        public object Owner { get; set; }
         public IBehaviorTree ParentTree { get; set; }
         public TaskStatus LastStatus { get; private set; }
 
@@ -21,9 +20,15 @@ namespace CleverCrow.Fluid.BTs.Decorators {
         public override TaskStatus Update () {
             base.Update();
 
-            if (Child == null) {
-                if (Application.isPlaying) Debug.LogWarning(
+            if (Child == null)
+            {
+#if UNITY_EDITOR
+                if (UnityEngine.Application.isPlaying)
+				{
+                    UnityEngine.Debug.LogWarning(
                     $"Decorator {Name} has no child. Force returning failure. Please fix");
+                }
+#endif
                 return TaskStatus.Failure;
             }
             

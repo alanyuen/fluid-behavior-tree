@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using CleverCrow.Fluid.BTs.TaskParents;
 using CleverCrow.Fluid.BTs.Tasks;
-using UnityEngine;
 
 namespace CleverCrow.Fluid.BTs.Trees {
     public interface IBehaviorTree {
@@ -15,7 +14,7 @@ namespace CleverCrow.Fluid.BTs.Trees {
     
     [System.Serializable]
     public class BehaviorTree : IBehaviorTree {
-        private readonly GameObject _owner;
+        private readonly object _owner;
         private readonly List<ITask> _tasks = new List<ITask>();
         
         public int TickCount { get; private set; }
@@ -24,7 +23,7 @@ namespace CleverCrow.Fluid.BTs.Trees {
         public TaskRoot Root { get; } = new TaskRoot();
         public IReadOnlyList<ITask> ActiveTasks => _tasks;
 
-        public BehaviorTree (GameObject owner) {
+        public BehaviorTree (object owner) {
             _owner = owner;
             SyncNodes(Root);
         }

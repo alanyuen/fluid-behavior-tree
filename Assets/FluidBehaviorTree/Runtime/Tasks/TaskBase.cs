@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using CleverCrow.Fluid.BTs.Trees;
-using UnityEngine;
 
 namespace CleverCrow.Fluid.BTs.Tasks {
     public abstract class TaskBase : GenericTaskBase, ITask {
@@ -12,7 +11,7 @@ namespace CleverCrow.Fluid.BTs.Tasks {
 
         public string Name { get; set; }
         public bool Enabled { get; set; } = true;
-        public GameObject Owner { get; set; }
+        public object Owner { get; set; }
         public IBehaviorTree ParentTree { get; set; }
 
         public List<ITask> Children { get; } = null;
@@ -26,7 +25,7 @@ namespace CleverCrow.Fluid.BTs.Tasks {
                 Init();
                 _init = true;
             }
-
+            
             if (!_start) {
                 Start();
                 _start = true;
@@ -51,7 +50,7 @@ namespace CleverCrow.Fluid.BTs.Tasks {
             if (ParentTree == null) {
                 return;
             }
-
+            
             if (_lastTickCount != ParentTree.TickCount) {
                 Reset();
             }
@@ -85,7 +84,7 @@ namespace CleverCrow.Fluid.BTs.Tasks {
         /// </summary>
         protected virtual void OnInit () {
         }
-
+        
         private void Start () {
             OnStart();
         }
@@ -101,7 +100,7 @@ namespace CleverCrow.Fluid.BTs.Tasks {
                 OnExit();
             }
 
-            Reset();
+            _exit = false;
         }
 
         /// <summary>
